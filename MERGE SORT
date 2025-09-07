@@ -1,0 +1,84 @@
+#include<iostream>
+using namespace std;
+
+void merge(int *arr, int s, int e) {                        // JO ARRAY PAHUNCHA HAI ... USMEIN 2 SORTED ARRAYS PADE HEIN ....
+
+    int mid = (s+e)/2;                                      // MID NIKALA
+                                                            // NOW WE WILL START PROCESS OF MAKING 2 DIFF SORTED ARRAYS AND THEN WE WILL MEREGE 2 SORTED ARRAYS 
+    int len1 = mid - s + 1;                                 // ARRAY 1 KI LENGTH                              
+    int len2 = e - mid;                                     // ARRAY 2 KI LENGTH
+
+    int *first = new int[len1];                             // FIRST NAAM KA ARR BANA DIYA
+    int *second = new int[len2];                            // SECOND NAAM KA ARRAY BANA DIYA
+
+    //copy values                                           // JO SORTING LAMBE WALE ARR MIEN PADI HAI ... USKA PAHLA HISSA FIRST MEIN COPY KARN AHAI 
+    int mainArrayIndex = s;
+    for(int i=0; i<len1; i++) {
+        first[i] = arr[mainArrayIndex++];
+    }
+
+    mainArrayIndex = mid+1;                                 // DOOSRA HISSA , SECOND MEIN COPY KARNA HAI 
+    for(int i=0; i<len2; i++) {
+        second[i] = arr[mainArrayIndex++];
+    }
+                                                            // NOW WE HAVE 2 SORTED ARRAYS NAMED FIRST AND SECOND
+    //merge 2 sorted arrays     
+    int index1 = 0;
+    int index2 = 0;
+    mainArrayIndex = s;
+
+    while(index1 < len1 && index2 < len2) {                 // THIS IS LOGIC FOR MERGING 2 SORTED ARRAYS 
+        if(first[index1] < second[index2]) {
+            arr[mainArrayIndex++] = first[index1++];
+        }
+        else{
+            arr[mainArrayIndex++] = second[index2++];
+        }
+    }   
+
+    while(index1 < len1) {                                  // AGAR SECOND KHATAM HO CHUKA HO , PER FIRST ABHI PENDING HO 
+        arr[mainArrayIndex++] = first[index1++];
+    }
+
+    while(index2 < len2 ) {                                 // AGAR FIRST KHATAM HO BUT SECOND IS STILL PENDING 
+        arr[mainArrayIndex++] = second[index2++];
+    }
+
+    delete []first;                                         // AB BSS FIRST AUR SECOND KO DEL KAR DO 
+    delete []second;
+
+}
+
+void mergeSort(int *arr, int s, int e) {                   // EK ARR HAI , AUR EK USKA START INDEX HAI , AUR EK USKA END INDEX HAI 
+
+    //base case 
+    if(s >= e) {                                           // REMEMBER THIS BASE CASE 
+        return;                                            // SIMPLE RETURN NOTHING 
+    }
+    
+    int mid = (s+e)/2;                                     // CALCULATE MIDDLE ELEMENT 
+
+    //left part sort karna h 
+    mergeSort(arr, s, mid);                                // JUST IMAGINE KI S SE MID TAK KA SORT KAR DIYA ISS STATEMENT NE
+    
+    //right part sort karna h 
+    mergeSort(arr, mid+1, e);                              // MID +1 SE E TAK KA BHI SORT KAR DIYA 
+
+    //merge
+    merge(arr, s, e);                                      // THEN WE NEED TO MERGE THESE TWO SORTED THINGS .... TILL NOW TWO SORTED THINGS ARE IN THE ARRAY ONLY
+
+}
+
+int main() {
+
+    int arr[15] = {3,7,0,1,5,8,3,2,34,66,87,23,12,12,12};  // EK ARRAY HAI ... OF 15 ELEMENTS
+    int n = 15;
+
+    mergeSort(arr, 0, n-1);                                // START = 0 , END = N-1
+
+    for(int i=0;i<n;i++){
+        cout << arr[i] << " ";
+    } cout << endl;
+
+    return 0;
+}
