@@ -22,3 +22,9 @@ vector<int> nextSmallerElement(vector<int> &arr, int n)
     }
     return ans;
 }
+
+
+// HISTOGRAM QUESTION KE LIYE .... JUST DO ONE THING 
+// AAPKA JO ELEMENT HAN STACK KE ANDER PUSH KAR RAHEIN HEIN .... USKO INDEX KE SAATH PUSH KARDO BSS 
+// AUR JO STACK HAI ... MATLAB USKO <ITN , INT > KA BANAO ....
+// VECTOR BHI <INT , INT> KA BANALO 
