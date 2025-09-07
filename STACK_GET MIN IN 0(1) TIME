@@ -2,7 +2,7 @@
 #include<limits.h>
 class SpecialStack {
     // Define the data members.
-	stack<int> s;                             // STACK BANAYA , SIMPLE INT TYPE DA 
+	stack<int> s;                           // STACK BANAYA , SIMPLE INT TYPE DA 
     int mini = INT_MAX;
     /*----------------- Public Functions of SpecialStack -----------------*/
     public:
