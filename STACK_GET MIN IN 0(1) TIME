@@ -1,0 +1,71 @@
+#include<stack>
+#include<limits.h>
+class SpecialStack {
+    // Define the data members.
+	stack<int> s;                             // STACK BANAYA , SIMPLE INT TYPE DA 
+    int mini = INT_MAX;
+    /*----------------- Public Functions of SpecialStack -----------------*/
+    public:
+        
+    void push(int data) {                   // SIMPLE PUSH KARNE KE LIYE EK DATA AAYEGA  
+                                            // IF STATEMENT IS FOR EMPTY STACK , JAB STACK EMPTY HAI , TOH DATA DAALA AUR WAHI DATA MIN HOGA .
+        if(s.empty()) {
+            s.push(data);
+            mini = data;
+        }
+
+        else                                // HERE STARTS THE ELSE STATEMENT
+        {                                   // NOW , LEARN THIS THING 
+         	if(data < mini) {                 // JO DATA AAYA HAI , AGAR WO MINI KI VALUE SE CHHOTA HAI , TOH YEH 2 KAAM KARNE HEIN 
+                s.push(2*data - mini);      // STACK MEIN EK CERTAIN CHEEZ PUSH KRNI HAI 
+                mini = data;                // AUR MINI KO UPDATE KARNA HAI 
+            }   
+            else                            // AUR AGAR WO DATA CHHOTA NAHI HEIN .... TOH SIMPLE EK KAAM KARN AHAI ... PUSH KARNA KA .....
+            {
+                s.push(data);               // SIMPLE PUSH DATA ON TO STACK ... NO UPDATION OF MINI ...
+            }
+        }
+    }
+
+    int pop() {                             // POPPING KE TIME PE TOH KOI DATA NAHI AAYEGA ... SIMPLE POP OPERATION CALL HOGA 
+        if(s.empty()){                      // AGAR STACK EMPTY HAI TOH SIMPLY -1 HOGA RETURN 
+            return -1;
+        }
+        
+        int curr = s.top();                 // TOP KE ELEMENT KO STORE KARA LIYA 
+        s.pop();                            // USKO POP KAR DIYA 
+        if(curr > mini) {                   // JO TOP KA ELEMENT STORE KIYA THA .... AGAR WO MIN SE BADA HAI TOH SIMPLE CURR RETURN KAR DENA 
+            return curr;
+        }
+        else                                // AGAR STORED ELEMENT BADA NAHI HAI TOH ..... YEH KAAM KARNE HONGE .....
+        {
+            int prevMin = mini;             // JO MIN HAI USKO STORE KARA LIYA
+            mini = 2*mini - curr;           // MINI KO UPDATE KARA
+            return prevMin;                 // JO VARIABLE STORE KAR RAHA THA ... USS ELEMENT KO RETURN KAR DENA
+        }
+    }
+
+    int top() {                             // AGAR TOP ELEMENT MAANG LE ... TOH KYA RETURN KARNA HAI ....
+        if(s.empty())                       // AGAR JO STACK HI EMPTY HAI ... TOH RETURN -1 .
+            return -1;
+        
+        if(s.top() < mini) {                // AGAR S.TOP ... MINI SE CHHOTA HAI ..... 
+            return mini;                    // TOH MINI RETURN 
+        }
+        else                                // ELSE 
+        {
+            return curr;                    // CURRENT HI RETURN KARNA
+        }
+    }
+
+    bool isEmpty() {
+        return s.empty();
+    }
+
+    int getMin() {                          // AGAR KOI GET MIN POOCH LE 
+        if(s.empty())
+            return -1;
+        
+        return mini;                        // TOH SIMPLE MINI RETURN KAR DO ... KYUNKI MINI TOH TIME TO TIME SAHI SE UPDATE HO HI RAHA HAI .
+    }  
+};
