@@ -1,1 +1,24 @@
+#include<stack>
+vector<int> nextSmallerElement(vector<int> &arr, int n)
+{
+    stack<int> s;                     // STACK BANAYA
+    s.push(-1);                       // SAB SE PEHLE TOH STACK MEIN -1 PUSH KAR DIYA
+    vector<int> ans(n);               // RESULT KO STORE KARNE KE LIYE EK VECTOR BANAYA 
+    
+    for(int i=0; i<n ; i++) {  
+                                      // JAB BHI PREV SMALLER NIKALNA HO .. TOH AAGE SE SHURU KARNA HOTA HAI TRAVERSAL
 
+        int curr = arr[i];            // JO BHI ARRAY KA ELEMENT PROCESS KARNA HAI .. USKO CURR MEIN STORE KIYA ....      
+
+        while(s.top() >= curr)        // NOW THIS WHILE LOOP IS THE MAIN LOGIC .... JAB TAK S.TOP IS GREATER THAN CURR ELEMENT ....
+        {                                  ..... KEEP POPPING THE STACK ..... AUR PHIR RUK JAO .......
+            s.pop();
+        }
+
+
+        //ans is stack ka top         // AFTER POPPING ... JO BHI STACK KE TOP PE PADA HAI ... WAHI AAPKA ANS HAI .....
+        ans[i] = s.top();             // ANS KO SAVE KAR LIYA 
+        s.push(curr);                 // AUR CURR ELEMENT KO PUSH KAR LIYA STACK KE ANDER
+    }
+    return ans;
+}
