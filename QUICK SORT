@@ -1,0 +1,75 @@
+#include<iostream>
+using namespace std;
+
+
+int partition( int arr[], int s, int e) {           // PARTITION KE LIYE START AND END INDEX AATA HAI , FOR FIRST ITERATION S = 0 , E = N-1
+
+    int pivot = arr[s];                             // STARTING ELEMENT KO HI PRIVATE KAR DIYA 
+
+    int cnt = 0;
+    for(int i = s+1; i<=e; i++) {                   // WE ARE TRYING TO COUNT KI KITNE ELEMENT PIVOT SE CHHOTE HEIN 
+        if(arr[i] <=pivot) {
+            cnt++;
+        }
+    }
+
+    //place pivot at right position
+    int pivotIndex = s + cnt;                       // PIVOT ELEMENT KO KAUNSE INDEX PE HONA CHAHIYE , YEH PATA LAG GYA
+    swap(arr[pivotIndex], arr[s]);                  // AB APNE START KE ELEMENT KO AUR PIVOT KE ELEMENT KO EXCHANGE KAR DIYA 
+                                                    // NOW WE NEED TO ARRANGE ALL SMALL ELEMENTS ON LEFT AND BIGGER ON RIGHT 
+    //left and right wala part smbhal lete h 
+    int i = s, j = e;                               // SIMPLE I AND J ALLOT KIYA 
+
+    while(i < pivotIndex && j > pivotIndex) {       // SIMPLE STATEMENT .. KYUNKI PIVOT KE AAGE PICCHE REHNE CHAHIYE DONO ELEMENTS   
+
+        while(arr[i] <= pivot)                      // LEFT SIDE KE TRAVERSAL KI BAAT HO RAHI HAI 
+        {
+            i++;                                    // AGAR ELEMENT CHHOTA HAI TOH I++ KAR DIYA
+        }
+
+        while(arr[j] > pivot) {                     // RIGHT SIDE KE TRAVERSAL KI BAAT HO RAHI HAI 
+            j--;                                    // J KO DECREMENT SIMPLE
+        }
+
+        if(i < pivotIndex && j > pivotIndex) {      // AB ISS STAGE PE AAKE YEH CONDITION IS THE ONLY POSSIBILITY 
+            swap(arr[i++], arr[j--]);               // AND ISS CONDITION MEIN AAPKO SWAP KARNA HOGA 
+        }
+
+    }
+
+    return pivotIndex;                              // BSS JO INDEX THA , CENTRE KA WO RETURN KAR DENA HAI 
+
+}
+
+void quickSort(int arr[], int s, int e) {    // FUNCTION WITH START AND END 
+
+    //base case
+    if(s >= e)                               // SIMPLE BASE CASE 
+        return ;
+
+    //partitioon karenfe
+    int p = partition(arr, s, e);            // PARTITION FUNCTION KYA KAREGA KI EK ELELMENT KE LEFT PE CHHOTE AUR RIGHT PE SAARE BADE ELEMENTS RAKH DEGA 
+                                             // PARTITION FUNCTION JO HAI WO EK INDEX HI RETURN KARTA HAI 
+    //left part sort karo
+    quickSort(arr, s, p-1);                  // AB JO LEFT WALA HAI , USKI CALL 
+
+    //right wala part sort karo       
+    quickSort(arr, p+1, e);                  // FIR RIGHT WALE KI CALL 
+
+}
+
+int main() {
+
+    int arr[10] = {2,4,1,6,9 ,9,9,9,9,9};     // SIMPLE , THIS IS ARRAY
+    int n = 10;
+
+    quickSort(arr, 0, n-1);                   // SIMPLE , START AND END INDEX
+
+    for(int i=0; i<n; i++) 
+    {
+        cout << arr[i] << " ";
+    } cout << endl;
+
+
+    return 0;
+}
