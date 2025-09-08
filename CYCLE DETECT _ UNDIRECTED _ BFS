@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string cycleDetection(vector<vector<int>>& edges, int n, int m) {
-    unordered_map<int, list<int>> adj;
+string cycleDetection(vector<vector<int>>& edges, int n, int m) {     // SIMPLE GIVEN FUNCTION 
+    unordered_map<int, list<int>> adj;                                // MAKING ADJ MAP
 
     // Build adjacency list
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i < m; i++) {                                     // MAKING ADJ LIST
         int u = edges[i][0];
         int v = edges[i][1];
 
@@ -13,30 +13,30 @@ string cycleDetection(vector<vector<int>>& edges, int n, int m) {
         adj[v].push_back(u);
     }
 
-    vector<bool> visited(n, false);
+    vector<bool> visited(n, false);                                   // SIMPLE VISITED ARRAY
 
     // BFS for each component
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {                                     // FOR LOOP TO HANDLE DISCONNECTED COMPONENTS 
         if (!visited[i]) {
-            unordered_map<int, int> parent;
-            queue<int> q;
+            unordered_map<int, int> parent;                           // ADDITIONAL DATA STRUCTURE -- PARENT NAAM KA 
+            queue<int> q;                                             // QUEUE TOH BANTI HI HAI BFS MEIN                
+ 
+            visited[i] = true;                                        // VISITED TRUE AS IN BFS
+            q.push(i);                                                // SIMPLE PUSH IN BFS
+            parent[i] = -1;                                           // ADDITIONALLY PARENT ASSIGN 
 
-            visited[i] = true;
-            q.push(i);
-            parent[i] = -1;
-
-            while (!q.empty()) {
-                int top = q.front();
+            while (!q.empty()) { 
+                int top = q.front();                                  // SIMPLE QUEUE KI PROCESSING AS IN BFS 
                 q.pop();
 
-                for (auto neighbor : adj[top]) {
+                for (auto neighbor : adj[top]) {                      // SIMPLE KI AGAR VISITED NAHI HAI TOH ....   
                     if (!visited[neighbor]) {
                         visited[neighbor] = true;
-                        parent[neighbor] = top;
+                        parent[neighbor] = top;                       // BSS PARENT KO BHI ASSIGN KARNA YAAD RAKHO
                         q.push(neighbor);
                     } 
-                    // If visited and not parent → cycle found
-                    else if (neighbor != parent[top]) {
+                    // If visited and not parent → cycle found        
+                    else if (neighbor != parent[top]) {               // ADDITIONAL THING TO REMEMBER 
                         return "Yes";
                     }
                 }
@@ -44,6 +44,11 @@ string cycleDetection(vector<vector<int>>& edges, int n, int m) {
         }
     }
 
-    return "No";
+    return "No";                                                      // JAHA FOR LOOP KHATAM HOTA HAI , WAHA FALSE STATEMENT DAALNI HAI 
 }
+
+
+// SAARA CODE IS SAME AS BFS ...
+// BSS AAPKO EK PARENT NAAM KE DS KO TIME TO TIME UPDATE KARTA REHNA HAI
+// else if (neighbor != parent[top]) {return "Yes";} BSS IK STATEMENT KO YAAD RAKHO AND EVERYTING IS SAME AS BFS .
 
