@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// DFS function
+void dfs(int node, unordered_map<int, list<int>> &adj, vector<bool> &visited, stack<int> &s) {
+    visited[node] = true;
+
+    for (auto neighbour : adj[node]) {
+        if (!visited[neighbour]) {
+            dfs(neighbour, adj, visited, s);
+        }
+    }
+
+    // Push to stack *after* visiting all neighbours
+    s.push(node);
+}
+
+// Topological Sort using DFS
+vector<int> topoSort(int n, vector<vector<int>> &edges) {
+    // Step 1: Build adjacency list
+    unordered_map<int, list<int>> adj;
+    for (auto edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        adj[u].push_back(v);  // Directed edge u -> v
+    }
+
+    vector<bool> visited(n, false);
+    stack<int> s;
+
+    // Step 2: Call DFS for all unvisited nodes
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            dfs(i, adj, visited, s);
+        }
+    }
+
+    // Step 3: Pop elements from stack → Topological order
+    vector<int> topo;
+    while (!s.empty()) {
+        topo.push_back(s.top());
+        s.pop();
+    }
+
+    return topo;
+}
+
